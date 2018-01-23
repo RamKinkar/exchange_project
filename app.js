@@ -28,24 +28,22 @@ app.post('/upload', function(req, res) {
     return res.status(400).send('No files were uploaded.');
  	console.log('requesttttttttttttt',req.files)
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
- 	console.log('sampleFile>>>>>>>>>>>>>>>>>',sampleFile)
- 	let name_of_file = sampleFile.name
-  // Use the mv() method to place the file somewhere on your server
-  	fs.mkdir('project_images/exchange_project', [0o765], function(err) {
-  		if(err) console.log('errrorrr',err )
-  		console.log('file created')
-  	});	// fs.mkdirSync('1/2/3/4/5', [mode]);
-	fs.writeFile('project_images/exchange_project'+'/'+`${ name_of_file}`, 'aaa', function(err) {
+  // 
+  	var fileObject = Object.values(req.files);
+ 	console.log('fileObject>>>>>>>>>>>>>>>>>',fileObject)
+ 	var randomNumberBetween0and19 = Math.floor(Math.random() * 20);
+  	var aadharfolder_id = {
+  		"aadharfolder_id": 'user_aadhar'+randomNumberBetween0and19
+  	}
+  	console.log('aadharfolder_id>>>>>>>>>>>>>>',aadharfolder_id.aadharfolder_id)
+  	// var buf = new Buffer(sampleFile.data, 'base64');
+  	let pathOfData = __dirname +'/../../kyc_aadhar_images/'+aadharfolder_id.aadharfolder_id
+  	let base64 = new Buffer(fileObject[0].data, 'base64');
+	 fs.writeFile(pathOfData+'/aadhar.png', base64, function(err) {
 		if(err) console.log('errrorrr',err )
-  		console.log('image saved>>>>>>>>>>>>>')
+ 		console.log('image saved>>>>>>>>>>>>>')
+ 		return res.json({'msg':'image saved successfully'});
 	})
-  // sampleFile.mv('/project_images'+'/'+`${sampleFile.name}`, function(err) {
-  //   if (err)
-  //     return res.status(500).send(err);
- 	// console.log('responseee>>>>>', res)
-  //   res.send('File uploaded!');
-  // });
 });
 
 // app.get('/api/userKycinfo', function(req, res){
