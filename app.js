@@ -2,7 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-var fs = require('file-system');
+// var fs = require('file-system');
 // const db = require('../db');
 const usrKycInfo = require('./server/models').usrKycInfo;
 
