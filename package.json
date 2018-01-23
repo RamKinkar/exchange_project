@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon ./bin/www",
+    "start": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,10 +13,12 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-fileupload": "^0.3.0",
+    "file-system": "^2.2.2",
     "morgan": "^1.9.0",
-    "pg": "^7.4.1",
+    "pg": "6.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.31.2"
+    "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "nodemon": "^1.14.11"

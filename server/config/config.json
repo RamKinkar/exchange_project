@@ -1,44 +1,26 @@
 {
   "development": {
     "username": "postgres",
-    "password": "password",
+    "password": "testing",
     "database": "exchangedb_dev",
-    "port": 5432,
+    "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "password",
+    "password": "testing",
     "database": "exchangedb_dev",
-    "port": 5432,
+    "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "password",
+    "password": "testing",
     "database": "exchangedb_dev",
-    "port": 5432,
+    "host": "127.0.0.1",
+    "port": "5432",
     "dialect": "postgres"
   }
 }
-
-
-
-// {
-//   "development": {
-//     "username": "waiyaki",
-//     "password": null,
-//     "database": "todos-dev",
-//     "host": "127.0.0.1",
-//     "port": 5432,
-//     "dialect": "postgres"
-//   },
-//   "test": {
-//     "username": "waiyaki",
-//     "password": null,
-//     "database": "todos-test",
-//     "host": "127.0.0.1",
-//     "port": 5432,
-//     "dialect": "postgres"
-//   }
-// }
