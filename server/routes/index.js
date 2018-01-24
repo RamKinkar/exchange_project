@@ -7,6 +7,7 @@ module.exports = (app) => {
   app.post('/api/userKycinfo', userKycinfoController.create);
   app.delete('/api/userKycinfo', userKycinfoController.destroy);
   app.post('/api/uploadAadhar', userKycinfoController.uploadAadhar);
+  app.post('/api/uploadPan', userKycinfoController.uploadPan);
   // app.get('/api/userKycinfo', userKycinfoController.list);
 
 };

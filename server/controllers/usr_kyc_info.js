@@ -44,12 +44,31 @@ module.exports = {
       "aadharfolder_id": 'user_aadhar'+randomNumberBetween0and19
     }
     // var buf = new Buffer(sampleFile.data, 'base64');
-    let pathOfData = __dirname +'/../../../kyc_aadhar_images/'+aadharfolder_id.aadharfolder_id
+    let pathOfData = __dirname +'/../../../kyc_images/'+aadharfolder_id.aadharfolder_id
     let base64 = new Buffer(fileObject[0].data, 'base64');
     fs.writeFile(pathOfData+'/aadhar.jpg', base64, function(err) {
       if(err) console.log('errrorrr',err )
       console.log('image saved>>>>>>>>>>>>>')
-      return res.json({'msg':'image saved successfully'});
+      return res.json({'msg':'aadhar saved successfully'});
+    })
+  },
+
+  uploadPan(req, res) {
+    if (!req.files)
+      return res.status(400).send('No files were uploaded.');
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    var fileObject = Object.values(req.files);
+    var randomNumberBetween0and19 = Math.floor(Math.random() * 20);
+    var pan_id = {
+      "pan_id": 'user_pan'+randomNumberBetween0and19
+    }
+    // var buf = new Buffer(sampleFile.data, 'base64');
+    let pathOfData = __dirname +'/../../../kyc_images/'+pan_id.pan_id
+    let base64 = new Buffer(fileObject[0].data, 'base64');
+    fs.writeFile(pathOfData+'/pan.png', base64, function(err) {
+      if(err) console.log('errrorrr',err )
+      console.log('image saved>>>>>>>>>>>>>')
+      return res.json({'msg':'pan saved successfully'});
     })
   },
 };
