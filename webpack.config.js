@@ -1,8 +1,11 @@
+var path = require('path');
+var webpack = require('webpack');
 var config = {
    entry: './main.js',
    output: {
-      path:'/',
+      path:path.resolve(__dirname, 'build'),
       filename: 'index.js',
+      publicPath: 'http://localhost:3000/',
    },
    devServer: {
       inline: true,
