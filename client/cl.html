@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example of Bootstrap 3 Horizontal Form Layout</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style type="text/css">
+    .container{
+      margin: 20px;
+    }
+  /* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+    .form-horizontal .control-label{
+        padding-top: 7px;
+    }
+    .form-control
+    {
+      margin-bottom: 8px;
+
+
+    }
+    .margin
+</style>
+  </head>
+<body>
+<div class="container">
+  <h2 align="left">KYC DETAILS</h2>
+  <form>
+     <div class="form-group">
+            <label for="input pannumber" class="control-label col-xs-2">PAN NUMBER:</label>
+            <div class="col-xs-10">
+                <input type="number" class="form-control" id="n1" placeholder="ABCD1234G" required>
+            </div>
+     <label for="enter dob" class="control-label col-xs-2">PAN DOB:</label>
+     
+            <div class="col-xs-10">
+                <input type="date" class="form-control" id="d1" placeholder="01/03/1995" required>
+            </div><br>
+    <label for="enter pan holder name" class="control-label col-xs-2">PAN NAME:</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="p1" placeholder="JOHN DOE" required>
+            </div>
+       <label for="upload" class="control-label col-xs-2">UPLOAD PAN:</label>
+            <div class="col-xs-10">
+                <input type="file" class="form-control" id="i1" required>
+            </div>
+         <label for="enter aadhar holder name" class="control-label col-xs-2">AADHAR NAME:</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="a1" placeholder="JOHN DOE" required>
+            </div>
+         <label for="enter aadhar number" class="control-label col-xs-2">AADHAR NUMBER:</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="n2" placeholder="111122223333" required>
+            </div>
+    <label for="upload" class="control-label col-xs-2">UPLOAD AADHAR:</label>
+            <div class="col-xs-10">
+                <input type="file" class="form-control" id="i2" required>
+            </div>
+    <button class="btn btn-primary" type="submit" onclick="submitdata(this)" style="position: absolute; top:40%;left:10%">
+        save</button>
+  </form>
+</div>
+
+</body>
+</html>
