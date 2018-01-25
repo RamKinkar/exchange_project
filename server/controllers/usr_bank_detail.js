@@ -1,23 +1,20 @@
 const Usr_Bank_Detail = require('../models').usr_bank_detail;
-var fs = require('file-system');
-var _ = require('lodash');
-var bcrypt = require('bcrypt');
-const saltRounds = 10;
+var CommonHelper = require('../../_helper');
 
 
 module.exports = {
 
  create(req, res) {
-
+ var data = CommonHelper._getEncryptedBankData(req.body);
  return Usr_Bank_Detail
   .create({
-         bank_name: req.body.bank_name,
-         branch_name: req.body.branch_name,
-         account_no: req.body.account_no,
-         account_holderName: req.body.account_holderName,
-         ifsc_code: req.body.ifsc_code,
-         account_type: req.body.account_type,
-         mobile_no: req.body.mobile_no,
+         bank_name: data.bank_name,
+         branch_name: data.branch_name,
+         account_no: data.account_no,
+         account_holderName: data.account_holderName,
+         ifsc_code: data.ifsc_code,
+         account_type: data.account_type,
+         mobile_no: data.mobile_no,
         
        })
        .then(Usr_Bank_Detail => res.status(201).send(Usr_Bank_Detail))

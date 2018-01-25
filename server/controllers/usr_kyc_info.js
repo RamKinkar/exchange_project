@@ -1,6 +1,5 @@
 const Usr_kyc_Info = require('../models').usr_kyc_info;
 var fs = require('file-system');
-var _ = require('lodash');
 var CommonHelper = require('../../_helper');
 
 
