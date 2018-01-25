@@ -1,4 +1,6 @@
 const userKycinfoController = require('../controllers').Usr_kyc_Info;
+const userBankDetailController = require('../controllers').Usr_Bank_Detail;
+
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -8,6 +10,7 @@ module.exports = (app) => {
   app.delete('/api/userKycinfo', userKycinfoController.destroy);
   app.post('/api/uploadAadhar', userKycinfoController.uploadAadhar);
   app.post('/api/uploadPan', userKycinfoController.uploadPan);
-  // app.get('/api/userKycinfo', userKycinfoController.list);
+  app.post('/api/userBankDetail', userBankDetailController.create);
+  app.delete('/api/userBankDetail', userBankDetailController.destroy);
 
 };
