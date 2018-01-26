@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, '/client')));
 
 app.use('/css', express.static(path.resolve(__dirname, './client/css')));
 app.use('/images', express.static(path.resolve(__dirname, './client/images')));
-app.use('/js', express.static(path.resolve(__dirname, './client/pages')));
+app.use('/js', express.static(path.resolve(__dirname, './client/js')));
 app.use('/javascript', express.static(path.resolve(__dirname, './client/javascript')));
 // app.use('/js', express.static(path.resolve(__dirname, '../client/js')));
 app.use('/fonts', express.static(path.resolve(__dirname, './client/fonts')));

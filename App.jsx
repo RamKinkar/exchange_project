@@ -1,5 +1,5 @@
-import React from 'react';
-import KycInfo from './client/pages/kycInfo';
+ import React from 'react';
+import KycInfo from './client/js/kycInfo';
 
 class App extends React.Component {
    render() {
