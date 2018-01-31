@@ -22,6 +22,7 @@ export default class KycInfo extends React.Component {
 	}
 
 	submitKycInfo () {
+		let self = this;
 		this.uploadPan();
 		this.uploadAadhar();
 		var data = {
@@ -35,11 +36,27 @@ export default class KycInfo extends React.Component {
 		}
 		axios.post('/api/userKycinfo', {data}).then(function (response) {
 		    if(response.data){
+		    	self.resetForm();
 		    	toastr.success('Saved Successfully','Kyc Information Saved Sucessfully')
 		    }
 		  }).catch(function (error) {
 		    console.log('ereeeeeeeeeor',error);
+		    toastr.error('Error',error)
 		});
+	}
+
+	resetForm () {
+		this.refs.aadhar_name.value =  '',
+		this.refs.pan_name.value =  '',
+		this.refs.aadhar_num.value =  '',
+		this.refs.pan_num.value =  '',
+		this.refs.pan_dob.value =  '',
+		this.refs.panImage.value =  ''
+		this.setState({
+			pan_filepath: ''	
+		})
+		// this.state.pan_filepath =  '',
+		// this.state.aadhar_filepath = ''
 	}	
 
 
@@ -101,7 +118,7 @@ export default class KycInfo extends React.Component {
 							</div>					
 							<div className="form-group">
 								<label>Upload Pan</label>
-								<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} icon='Upload Pan'/>
+								<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
 							</div>
 							<div className="form-group">
 								<label>Pan DOB</label>
