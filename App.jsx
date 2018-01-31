@@ -1,11 +1,11 @@
- import React from 'react';
-import KycInfo from './client/js/kycInfo';
+import React from 'react';
+import ProjectRouter from './projectRouter';
 
 class App extends React.Component {
    render() {
       return (
          <div>
-            <KycInfo/>
+            <ProjectRouter/>
          </div>
       );
    }
