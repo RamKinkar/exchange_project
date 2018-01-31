@@ -44,7 +44,7 @@ export default class UsrBankDetail extends React.Component {
 
     submitBankInfo () {
         // boolean check=validate();
-        alert("going to chck input text value");
+       // alert("going to chck input text value");
         let validateAccount=this.validate();
         if(validateAccount)
         {
@@ -75,52 +75,61 @@ export default class UsrBankDetail extends React.Component {
     }
     render() {
       return (
-        <div className="container">
-          <h2 align="center">User Bank DETAILS</h2>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="Enter IFSC CODE" className="control-label col-xs-7">IFSC CODE:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" pattern="^[A-Za-z]{4}\d{7}$" className="form-control" id="b1" ref="ifsc_code" placeholder="HDFC1234567" required/>
-                    </div>
-                    <label htmlFor="Branch Name" className="control-label col-xs-7">Branch Name:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b2" ref="branch_name" placeholder="noida" required/>
-                    </div>
-                     <label htmlFor="Account Type" className="control-label col-xs-7">Account Type:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b3" ref="acc_typ" placeholder="SAVING/CURRENT" required/>
-                    </div>   
-                     <label htmlFor="enter bank name" className="control-label col-xs-7">Enter Bank Name:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b4" ref="bank_name" placeholder="HDFC" required/>
-                     </div>
-                     
-                  
-                    <label htmlFor="enter account number" className="control-label col-xs-7">Enter the Account Number:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b5" ref="account_num" placeholder="1234567" required/>
-                    </div>
-                    <label htmlFor="enter the account holder name" className="control-label col-xs-7">Enter the Account Holder Name:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b6"  ref="account_holder_name" placeholder="JOHN DOE" required/>
-                    </div>
-                    <label htmlFor="re-enter the account number" className="control-label col-xs-7">Re-enter the Account Number:</label>
-                    <div className="col-sm-5 col-sm-offset-1">
-                        <input type="text" className="form-control" id="b7"  ref="renter_acc_num" placeholder="111122223333" required/>
-                    </div>
-                    <label htmlFor="enter mobile number" className="control-label col-xs-7">Enter Mobile Number:</label>
-                                <div className="col-sm-5 col-sm-offset-1">
-                                <input type="text" pattern="^\d{10}$" className="form-control" id="b8" ref="mob_num" placeholder="1234567894" required/>
+       <div className="container">
+            <h1 className="well">BANK DETAILS</h1>
+            <div className="col-lg-12 well">
+                <div className="row">
+                    <form>
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-sm-6 form-group">
+                                    <label>IFSC CODE:</label>
+                                    <input type="text"  pattern="^[A-Za-z]{4}\d{7}$"  ref="ifsc_code" placeholder="HDFC1234567" required="field can't be empty" className="form-control"/>
                                 </div>
-                    <label htmlFor="submit" className="control-label col-xs-1"></label>
-                                <div className="col-sm-3 col-sm-offset-1">
-                        <input type="submit" value="save" className="form-control" id="b8"   onClick={this.submitBankInfo} />
+                                <div className="col-sm-6 form-group">
+                                    <label>Branch Name</label>
+                                    <input type="text" ref="branch_name" placeholder="Noida"required="field can't be empty" className="form-control"/>
                                 </div>
+                            </div>  
+                              <div className="row">
+                                <div className="col-sm-6 form-group">
+                                    <label> Account Type</label>
+                                    <input type="text" ref="acc_typ" placeholder="Saving/current" required="field can't be empty" className="form-control"/>
+                                </div>
+                                <div className="col-sm-6 form-group">
+                                    <label>Bank Name</label>
+                                    <input type="text" ref="bank_name" placeholder="HDFC" required="field can't be empty" className="form-control"/>
+                                </div>
+                            </div> 
+                                 <div className="row">
+                                <div className="col-sm-6 form-group">
+                                    <label>Account Holder Name</label>
+                                    <input type="text" ref="account_holder_name" placeholder="JOHN DOE" required="field can't be empty" className="form-control"/>
+                                </div>
+                                <div className="col-sm-6 form-group">
+                                    <label>account Number</label>
+                                    <input type="text" ref="account_num" placeholder="1234567"required="field can't be empty" className="form-control"/>
+                                </div>
+                            </div>  
+                                 <div className="row">
+                                <div className="col-sm-6 form-group">
+                                    <label>Re-enter The AccountNumber</label>
+                                    <input type="text" ref="renter_acc_num" placeholder="1234567" required="field can't be empty" className="form-control"/>
+                                </div>
+                                <div className="col-sm-6 form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="text" pattern="^\d{10}$" ref="mob_num" placeholder="Enter Pan Number Here.."required="field can't be empty" className="form-control"/>
+                                </div>
+                            </div>   
+                                </div>
+                                 <div className="col-md-12 center-block" >
+                                 <input type="submit" value="save" className="btn btn-primary center-block" id="b8"   onClick={this.submitBankInfo} />
+                                </div>
+                    </form> 
                 </div>
-            </form>
+            </div>
         </div>
-       
+        
       );
     }
 }

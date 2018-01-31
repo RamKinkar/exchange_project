@@ -6,6 +6,7 @@ var CommonHelper = require('../../_helper');
 module.exports = {
   create(req, res) {
     var data = CommonHelper._getEncryptedKYCData(req.body.data);
+    console.log('encrypted data>>>>>>>>..', data)
      return Usr_kyc_Info
       .create({
         aadharHolder_name: data.aadharHolder_name,
@@ -74,5 +75,44 @@ module.exports = {
       console.log('image saved>>>>>>>>>>>>>')
       return res.json({'msg':'pan saved successfully', "filepath": filepath});
     })
+  },
+
+  getKycRecords(req, res) {
+    return Usr_kyc_Info
+      .findAll({
+        where: {
+          verification_flag: 'f',
+      },
+      })
+      .then(function (kycRecords) {
+        // console.log('before sending in helper',kycRecords)
+        // let data = CommonHelper._getDecryptedKYCData(kycRecords);
+        // console.log('decryptededeed after selectionnn',data)
+        res.status(200).send(kycRecords)
+      })
+      .catch(error => res.status(400).send(error));
+  },
+
+  verifyKyc(req, res) {
+    return Usr_kyc_Info
+    .findById(req.query.id, {
+        where: {
+          id: req.query.id,
+      },
+    })
+    .then(kycRecord => {
+      if (!kycRecord) {
+        return res.status(404).send({
+          message: 'kycRecord Not Found',
+        });
+      }
+      return kycRecord
+        .update({
+          verification_flag: req.body.verification_flag,
+        })
+        .then(() => res.status(200).send(kycRecord))  // Send back the updated todo.
+        .catch((error) => res.status(400).send(error));
+    })
+    .catch((error) => res.status(400).send(error));
   },
 };

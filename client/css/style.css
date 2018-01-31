@@ -34,6 +34,96 @@ img, div {
   margin: 10px 0 0 10px;
 }*/
 
+/*========ADMIN==================*/
+
+
+label.switch {
+    position: relative;
+    display: inline-block;
+    width: 53px;
+    height: 28px;
+}
+
+.switch input.spl_checkbox {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 23px;
+    width: 23px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input.spl_checkbox:checked + .slider {
+  background-color: #2196F3;
+}
+
+input.spl_checkbox:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input.spl_checkbox:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+    width: 57px;
+    height: 30px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.container_box {
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 2px #ccc;
+    width: 500%
+    margin: 0px 0px;
+}
+.tbl_left {
+    width: 100%;
+    padding: 12px 8px;
+    background: #ccc;
+}
+.table.mytbl>thead>tr>th {
+    border-bottom: 1px solid #ddd;
+}
+
+.cstm_frm_wrapper{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;}
+.cstm_frm_wrapper form{
+    width: 100%;
+    float: left;
+    box-shadow: 0px 0px 3px #888888;
+    padding: 40px;}
+
+.cstm_layout_wrapper{margin-top:8%;}
+
+
+
 .error-page {
   text-align: center;
   font-weight: 500;
@@ -46,6 +136,7 @@ img, div {
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  /*background-color: #ccc;*/
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

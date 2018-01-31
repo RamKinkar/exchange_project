@@ -76,7 +76,7 @@ export default class KycInfo extends React.Component {
 						<div className="col-sm-12">
 							<div className="row">
 								<div className="col-sm-6 form-group">
-									<label>Pan Name</label>
+									<label>Pan Holder Name</label>
 									<input type="text" ref="pan_name" placeholder="Enter Pan Holder Name.." className="form-control"/>
 								</div>
 								<div className="col-sm-6 form-group">
@@ -94,7 +94,7 @@ export default class KycInfo extends React.Component {
 							</div>	
 							<div className="row">
 								<div className="col-sm-6 form-group">
-									<label>Aadhar Name</label>
+									<label>Aadhar Holder Name</label>
 									<input type="text" ref="aadhar_name" placeholder="Enter Aadhar Name here" className="form-control"/>
 								</div>		
 								<div className="col-sm-6 form-group">

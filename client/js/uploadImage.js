@@ -27,7 +27,7 @@ export default class ImageUpload extends React.Component {
     
     return (    
       <section>
-        <Dropzone onDrop={ this.handleDrop } accept="image/jpg" multiple={ false } onDropRejected={ handleDropRejected }>
+        <Dropzone onDrop={ this.handleDrop } accept="image/jpg, image/jpeg" multiple={ false } onDropRejected={ handleDropRejected }>
           Drag a file here or click to upload.
         </Dropzone>
         { preview &&

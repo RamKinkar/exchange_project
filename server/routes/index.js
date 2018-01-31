@@ -10,6 +10,8 @@ module.exports = (app) => {
   app.delete('/api/userKycinfo', userKycinfoController.destroy);
   app.post('/api/uploadAadhar', userKycinfoController.uploadAadhar);
   app.post('/api/uploadPan', userKycinfoController.uploadPan);
+  app.get('/api/getKycRecords', userKycinfoController.getKycRecords);
+  app.post('/api/verifyKyc', userKycinfoController.verifyKyc);
   app.post('/api/userBankDetail', userBankDetailController.create);
   app.delete('/api/userBankDetail', userBankDetailController.destroy);
 
