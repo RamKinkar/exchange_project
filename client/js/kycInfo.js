@@ -11,16 +11,19 @@ export default class KycInfo extends React.Component {
 	      file:null,
 	      image: '',
 	      pan_filepath: '',
-	      aadhar_filepath: ''
+	      aadhar_filepath: '',
+	      aadharObject: null,
+	      panObject: null
 	    }
 		this.submitKycInfo = this.submitKycInfo.bind(this);
-		// this.abc = this.abc.bind(this);
-		this.uploadAadhar = this.uploadAadhar.bind(this);
-		this.uploadPan = this.uploadPan.bind(this);
+		this.storeAadhardata = this.storeAadhardata.bind(this);
+		this.storePandata = this.storePandata.bind(this);
 		// this.uploadImages = this.uploadImages.bind(this);
 	}
 
 	submitKycInfo () {
+		this.uploadPan();
+		this.uploadAadhar();
 		var data = {
 			'aadharHolder_name': this.refs.aadhar_name.value,
 			'panHolder_name': this.refs.pan_name.value,
@@ -30,7 +33,6 @@ export default class KycInfo extends React.Component {
 			'pan_filepath': this.state.pan_filepath,
 			'aadhar_filepath': this.state.aadhar_filepath
 		}
-		console.log('data>>>>>>>>>>>>>>>>>>>>',data)
 		axios.post('/api/userKycinfo', {data}).then(function (response) {
 		    if(response.data){
 		    	toastr.success('Saved Successfully','Kyc Information Saved Sucessfully')
@@ -41,10 +43,9 @@ export default class KycInfo extends React.Component {
 	}	
 
 
-	uploadAadhar (file) {
+	uploadAadhar () {
 		let self = this
-		console.log('uploadImages>>>>>>>>in callback', file)
-		axios.post('/api/uploadAadhar',file).then(function (response) {
+		axios.post('/api/uploadAadhar',this.state.aadharObject).then(function (response) {
 		    self.setState({
 		    	aadhar_filepath: response.data.filepath
 		    })
@@ -53,10 +54,24 @@ export default class KycInfo extends React.Component {
 		});
 	}	
 
-	uploadPan (file) {
+	storeAadhardata(file) {
 		let self = this
-		console.log('uploadImages>>>>>>>>in  upload pan inside callback', file)
-		axios.post('/api/uploadPan', file).then(function (response) {
+		self.setState({
+			aadharObject: file
+		})
+	}
+
+	storePandata(file) {
+		let self = this
+		self.setState({
+			panObject: file
+		})
+
+	}
+
+	uploadPan () {
+		let self = this
+		axios.post('/api/uploadPan', this.state.panObject).then(function (response) {
 		    self.setState({
 		    	pan_filepath: response.data.filepath
 		    })
@@ -86,7 +101,7 @@ export default class KycInfo extends React.Component {
 							</div>					
 							<div className="form-group">
 								<label>Upload Pan</label>
-								<ImageUpload uploadImages = {this.uploadPan} name='image' value={this.state.image} icon='Upload Pan'/>
+								<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} icon='Upload Pan'/>
 							</div>
 							<div className="form-group">
 								<label>Pan DOB</label>
@@ -104,7 +119,7 @@ export default class KycInfo extends React.Component {
 							</div>
 							<div className="form-group">
 								<label>Upload Aadhar</label>
-								<ImageUpload uploadImages = {this.uploadAadhar} name='image' value={this.state.image} icon='Upload Pan'/>
+								<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
 							</div>						
 						<button type="button" onClick = {this.submitKycInfo} className="btn btn-lg btn-info">Submit</button>					
 						</div>
