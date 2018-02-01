@@ -84,7 +84,7 @@ export default class UsrBankDetail extends React.Component {
                             <div className="row">
                                 <div className="col-sm-6 form-group">
                                     <label>IFSC CODE:</label>
-                                    <input type="text"  pattern="^[A-Za-z]{4}\d{7}$"  ref="ifsc_code" placeholder="HDFC1234567" required="field can't be empty" className="form-control"/>
+                                    <input type="text" ref="ifsc_code" placeholder="HDFC1234567" required="field can't be empty" className="form-control"/>
                                 </div>
                                 <div className="col-sm-6 form-group">
                                     <label>Branch Name</label>
