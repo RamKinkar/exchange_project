@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import {toastr} from 'react-redux-toastr'
+
 export default class UsrBankDetail extends React.Component {
 
     constructor(props){
@@ -8,7 +10,6 @@ export default class UsrBankDetail extends React.Component {
     
          }
          this.submitBankInfo = this.submitBankInfo.bind(this);
-         //this.Validate = this.validate.bind(this);
     }
 
     isEmpty(){
@@ -20,15 +21,13 @@ export default class UsrBankDetail extends React.Component {
 
     }
 
-    validate()
-    {
+    validate() {
         if(this.isEmpty()) {
             alert("Please enter required fields");
         } 
         else{
             var account_num = this.refs.account_num.value;
             var confirm_accnum = this.refs.renter_acc_num.value;
-    // var confirm_accnum = document.getElementById("b7").value;
                 if (account_num != confirm_accnum)
                 {
                     alert("account number do not match.");
@@ -39,40 +38,44 @@ export default class UsrBankDetail extends React.Component {
                 }
       
             }
-    // var account_num = document.getElementById("b5").value;
     }
 
     submitBankInfo () {
-        // boolean check=validate();
-       // alert("going to chck input text value");
+        let self = this;
         let validateAccount=this.validate();
         if(validateAccount)
         {
-                var data = {
-                    'bank_name': this.refs.bank_name.value,
-                    'branch_name': this.refs.branch_name.value,
-                    'account_no': this.refs.account_num.value,
-                    'account_holderName': this.refs.account_holder_name.value,
-                    'ifsc_code': this.refs.ifsc_code.value,
-                    'account_type': this.refs.acc_typ.value,
-                    'mobile_no': this.refs.mob_num.value
-               }
-                  
-                console.log('data>>>>>>>>>>>>>>>>>>>>',data)
-
-                axios.post('/api/userBankDetail', {data}).then(function (response) {
-                    console.log('response>>>>>>>>>>>>',response.data);
-                  }).catch(function (error) {
-                    console.log('ereeeeeeeeeor',error);
-                });
+            var data = {
+                'bank_name': this.refs.bank_name.value,
+                'branch_name': this.refs.branch_name.value,
+                'account_no': this.refs.account_num.value,
+                'account_holderName': this.refs.account_holder_name.value,
+                'ifsc_code': this.refs.ifsc_code.value,
+                'account_type': this.refs.acc_typ.value,
+                'mobile_no': this.refs.mob_num.value
             }
-            
-
-        else
-        {
-            console.log('account number not matching');
+            axios.post('/api/userBankDetail',{data}).then(function (response) {
+                if(response.data){
+                    self.resetForm();
+                    toastr.success('Saved Successfully','Bank Detail Saved Sucessfully')
+                }
+              }).catch(function (error) {
+                console.log('ereeeeeeeeeor',error);
+                toastr.error('Error',error)
+            });
         }
     }
+
+    resetForm () {
+        this.refs.bank_name.value =  '',
+        this.refs.branch_name.value =  '',
+        this.refs.account_num.value =  '',
+        this.refs.account_holder_name.value =  '',
+        this.refs.ifsc_code.value =  '',
+        this.refs.acc_typ.value =  ''
+        this.refs.mob_num.value =  ''
+    }   
+
     render() {
       return (
        <div className="container">

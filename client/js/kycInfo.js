@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import {toastr} from 'react-redux-toastr'
-import ImageUpload from './uploadImage'
+import ImageUpload from './uploadImage';
 
 export default class KycInfo extends React.Component {
 	constructor(props){
@@ -18,21 +18,22 @@ export default class KycInfo extends React.Component {
 		this.submitKycInfo = this.submitKycInfo.bind(this);
 		this.storeAadhardata = this.storeAadhardata.bind(this);
 		this.storePandata = this.storePandata.bind(this);
-		// this.uploadImages = this.uploadImages.bind(this);
-	}
+	} 
 
 	submitKycInfo () {
-		let self = this;
 		this.uploadPan();
-		this.uploadAadhar();
+	}
+
+	submitKyc (pan_filepath,aadhar_filepath) {
+		let self = this;
 		var data = {
 			'aadharHolder_name': this.refs.aadhar_name.value,
 			'panHolder_name': this.refs.pan_name.value,
 			'aadhar_number': this.refs.aadhar_num.value,
 			'pan_number': this.refs.pan_num.value,
 			'pan_dob': this.refs.pan_dob.value,
-			'pan_filepath': this.state.pan_filepath,
-			'aadhar_filepath': this.state.aadhar_filepath
+			'pan_filepath': pan_filepath,
+			'aadhar_filepath': aadhar_filepath
 		}
 		axios.post('/api/userKycinfo', {data}).then(function (response) {
 		    if(response.data){
@@ -52,20 +53,16 @@ export default class KycInfo extends React.Component {
 		this.refs.pan_num.value =  '',
 		this.refs.pan_dob.value =  '',
 		this.refs.panImage.value =  ''
-		this.setState({
-			pan_filepath: ''	
-		})
-		// this.state.pan_filepath =  '',
-		// this.state.aadhar_filepath = ''
 	}	
 
 
-	uploadAadhar () {
+	uploadAadhar (pan_filepath) {
 		let self = this
 		axios.post('/api/uploadAadhar',this.state.aadharObject).then(function (response) {
 		    self.setState({
 		    	aadhar_filepath: response.data.filepath
 		    })
+			self.submitKyc(pan_filepath,self.state.aadhar_filepath)
 		  }).catch(function (error) {
 		    console.log('ereeeeeeeeeor',error);
 		});
@@ -83,7 +80,6 @@ export default class KycInfo extends React.Component {
 		self.setState({
 			panObject: file
 		})
-
 	}
 
 	uploadPan () {
@@ -92,6 +88,9 @@ export default class KycInfo extends React.Component {
 		    self.setState({
 		    	pan_filepath: response.data.filepath
 		    })
+			if(self.state.pan_filepath){
+				self.uploadAadhar(self.state.pan_filepath);		  	
+			}
 		  }).catch(function (error) {
 		    console.log('ereeeeeeeeeor',error);
 		});

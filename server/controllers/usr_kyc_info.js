@@ -6,7 +6,6 @@ var CommonHelper = require('../../_helper');
 module.exports = {
   create(req, res) {
     var data = CommonHelper._getEncryptedKYCData(req.body.data);
-    console.log('encrypted data>>>>>>>>..', data)
      return Usr_kyc_Info
       .create({
         aadharHolder_name: data.aadharHolder_name,
@@ -15,7 +14,8 @@ module.exports = {
         pan_number: data.pan_number,
         pan_dob: req.body.data.pan_dob,
         pan_filepath: data.pan_filepath,
-        aadhar_filepath: data.aadhar_filepath
+        aadhar_filepath: data.aadhar_filepath,
+        verification_flag: false
       })
       .then(Usr_kyc_Info => res.status(201).send(Usr_kyc_Info))
       .catch(error => res.status(400).send(error));

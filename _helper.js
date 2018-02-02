@@ -34,38 +34,15 @@ module.exports = {
   },
 
   _getEncryptedBankData(req) {
-    var salt = bcrypt.genSaltSync(saltRounds);
     var data = {
-      'bank_name': bcrypt.hashSync(req.bank_name, salt),
-      'branch_name': bcrypt.hashSync(req.branch_name, salt),
-      'account_no': bcrypt.hashSync(req.account_no, salt),  
-      'account_holderName': bcrypt.hashSync(req.account_holderName, salt),
-      'ifsc_code': bcrypt.hashSync(req.ifsc_code, salt),  
-      'account_type': bcrypt.hashSync(req.account_type, salt),
-      'mobile_no': bcrypt.hashSync(req.mobile_no, salt)
+      'bank_name': crypto.createCipher('aes-256-ctr',key).update(req.bank_name,'utf-8','hex'),
+      'branch_name': crypto.createCipher('aes-256-ctr',key).update(req.branch_name,'utf-8','hex'),
+      'account_no': crypto.createCipher('aes-256-ctr',key).update(req.account_no,'utf-8','hex'),
+      'account_holderName': crypto.createCipher('aes-256-ctr',key).update(req.account_holderName,'utf-8','hex'),
+      'ifsc_code': crypto.createCipher('aes-256-ctr',key).update(req.ifsc_code,'utf-8','hex'),
+      'account_type': crypto.createCipher('aes-256-ctr',key).update(req.account_type,'utf-8','hex'),
+      'mobile_no': crypto.createCipher('aes-256-ctr',key).update(req.mobile_no,'utf-8','hex')
     }
     return data;
   },
-
-  // _getDecryptedKYCData(req) {
-  //   console.log('in requesttttt bycrpt in metod helper',req)
-  //   // var salt = bcrypt.genSaltSync(saltRounds);
-  //   // var pluck_data = _.pluck(req,"dataValues")
-  //   // console.log('pluck_data>>>>>>>>>>>>>Instance>>>>>>>>>>>.',pluck_data)
-  //   var decryptedRecords = []
-  //   return decryptedRecords = req.map((result,index)=>{
-  //     decryptedRecords.push({
-  //       'aadharHolder_name': crypto.createCipher('aes-256-ctr',key).update(result.aadharHolder_name,'hex','utf-8'),
-  //       'panHolder_name': crypto.createCipher('aes-256-ctr',key).update(result.panHolder_name,'hex','utf-8'),
-  //       'aadhar_number': crypto.createCipher('aes-256-ctr',key).update(result.aadhar_number,'hex','utf-8'),
-  //       'pan_number': crypto.createCipher('aes-256-ctr',key).update(result.pan_number,'hex','utf-8'),
-  //       'pan_filepath': crypto.createCipher('aes-256-ctr',key).update(result.pan_filepath,'hex','utf-8'),
-  //       'aadhar_filepath': crypto.createCipher('aes-256-ctr',key).update(result.aadhar_filepath,'hex','utf-8'),
-  //       'id': result.id,
-  //       'pan_dob': result.pan_dob,
-  //       'verification_flag': result.verification_flag
-  //     })
-  //   })
-  //   // return data;
-  // },
 };

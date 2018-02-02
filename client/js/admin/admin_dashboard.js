@@ -12,7 +12,6 @@ export default class AdminDashboard extends React.Component {
 	}
 
 	componentDidMount(){
-		// let self = this;
 		this.getKycRecords()
 	}
 
@@ -74,7 +73,7 @@ export default class AdminDashboard extends React.Component {
 		                          <td>{result.aadhar_number}</td>
 		                          <td>{result.panHolder_name}</td>
 		                          <td>{result.pan_number}</td>
-		                          <td><a href={result.aadhar_filepath} target="_blank">View Aadhar</a></td>
+		                          <td><a href={result.aadhar_filepath} type="image/jpg" target="_blank">View Aadhar</a></td>
 		                          <td><a href={result.pan_filepath} target="_blank">View Pan</a></td>
 		                          <td>
 		                            <label className="switch">
