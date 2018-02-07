@@ -56,7 +56,7 @@ export default class DisplayBankDetails extends React.Component {
 					  
 					  <tbody>
 					    <tr className="hide-bottom">
-					      <th>IFSC CODE</th>
+					      <th className="customBankLayout">IFSC CODE</th>
 					      <td>{data.ifsc_code}</td>
 					      
 					    </tr>

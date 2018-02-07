@@ -10,6 +10,7 @@ var data = {
     'residential_status': 'INDIAN',
     'residential_state': 'Uttar Pradesh',
     'city': 'Noida',
+    'state': 'UP',
 	'pincode': '201301',
 	'street_address':'d4/f4 Sctor-58 Noida nera abcd fjfjffjjf jgjgjgkglkg',
 	'mobile_no': '3456785678'
@@ -52,7 +53,7 @@ export default class DisplayKycDetails extends React.Component {
       return (
 		<div className="container">
 		   <div className="col-lg-12 well">
-		    <h1 className="bankDetailHeading">BANK DETAILS</h1>
+		    <h1 className="bankDetailHeading">KYC DETAILS</h1>
 			
 			<div className="row">
 					<table className="table">
