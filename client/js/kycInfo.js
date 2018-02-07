@@ -3,6 +3,7 @@ import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import {toastr} from 'react-redux-toastr'
 import ImageUpload from './uploadImage';
+import DatePickerComponent from './datepicker';
 
 export default class KycInfo extends React.Component {
 	constructor(props){
@@ -13,15 +14,23 @@ export default class KycInfo extends React.Component {
 	      pan_filepath: '',
 	      aadhar_filepath: '',
 	      aadharObject: null,
-	      panObject: null
+	      panObject: null,
+	      panDob: null
 	    }
 		this.submitKycInfo = this.submitKycInfo.bind(this);
 		this.storeAadhardata = this.storeAadhardata.bind(this);
 		this.storePandata = this.storePandata.bind(this);
+		this.setPanDob = this.setPanDob.bind(this);
 	} 
 
 	submitKycInfo () {
 		this.uploadPan();
+	}
+
+	setPanDob(panDob) {
+		this.setState({
+			panDob: panDob
+		})
 	}
 
 	submitKyc (pan_filepath,aadhar_filepath) {
@@ -31,25 +40,23 @@ export default class KycInfo extends React.Component {
 			'panHolder_name': this.refs.pan_name.value,
 			'aadhar_number': this.refs.aadhar_num.value,
 			'pan_number': this.refs.pan_num.value,
-			'pan_dob': this.refs.pan_dob.value,
+			'pan_dob': this.state.panDob,
 			'pan_filepath': pan_filepath,
-			'aadhar_filepath': aadhar_filepath,
-			'gros_income':this.refs.gross_income,
-			'resdential_status':this.refs.res_status,
-			'street_address':this.refs.street_addr,
-			'City':this.refs.city,
-			'state':this.refs.State,
-			'Pincode':this.refs.pincode
+			'aadhar_filepath': aadhar_filepath
+			// 'gros_income':this.refs.gross_income,
+			// 'resdential_status':this.refs.res_status,
+			// 'street_address':this.refs.street_addr,
+			// 'City':this.refs.city,
+			// 'state':this.refs.State,
+			// 'Pincode':this.refs.pincode
 
 		}
-		
-		
 			
-
 		axios.post('/api/userKycinfo', {data}).then(function (response) {
 		    if(response.data){
 		    	self.resetForm();
 		    	toastr.success('Saved Successfully','Kyc Information Saved Sucessfully')
+		    	self.props.history.push('/bankDetails')
 		    }
 		  }).catch(function (error) {
 		    console.log('ereeeeeeeeeor',error);
@@ -61,9 +68,7 @@ export default class KycInfo extends React.Component {
 		this.refs.aadhar_name.value =  '',
 		this.refs.pan_name.value =  '',
 		this.refs.aadhar_num.value =  '',
-		this.refs.pan_num.value =  '',
-		this.refs.pan_dob.value =  '',
-		this.refs.panImage.value =  ''
+		this.refs.pan_num.value =  ''
 	}	
 
 
@@ -132,7 +137,7 @@ export default class KycInfo extends React.Component {
 							</div>
 							<div className="form-group">
 								<label>Pan DOB</label>
-								<input type="date" ref="pan_dob" placeholder="01/03/1995" className="form-control"/>
+								<DatePickerComponent panDob={this.setPanDob}/>
 							</div>	
 							<div className="row">
 								<div className="col-sm-6 form-group">
@@ -186,10 +191,7 @@ export default class KycInfo extends React.Component {
 								</div>	
 							</div>						
 						<button type="button" onClick = {this.submitKycInfo} className="btn btn-lg btn-info">Submit</button>					
-						
 						</div>
-						
-   
 					</form> 
 				</div>
 			</div>

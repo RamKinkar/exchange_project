@@ -27,12 +27,12 @@ export default class ImageUpload extends React.Component {
     
     return (    
       <section>
+        <label>Click on the box to upload </label>
         <Dropzone onDrop={ this.handleDrop } accept="image/jpg, image/jpeg" multiple={ false } onDropRejected={ handleDropRejected }>
-          Drag a file here or click to upload.
-        </Dropzone>
-        { preview &&
-        <img src={ preview } alt="image preview" />
+          { preview &&
+        <img src={ preview } alt="image preview" height="200" width="200"/>
         }
+        </Dropzone>
       </section>
     )
   }

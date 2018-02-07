@@ -63,6 +63,7 @@ export default class UsrBankDetail extends React.Component {
                 if(response.data){
                     self.resetForm();
                     toastr.success('Saved Successfully','Bank Detail Saved Sucessfully')
+                    self.props.history.push('/view-kycDetails')
                 }
               }).catch(function (error) {
                 console.log('ereeeeeeeeeor',error);
