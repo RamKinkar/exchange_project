@@ -45,12 +45,39 @@ img, div {
   margin-bottom: 25px;
 }
 
-
-.customBankLayout{
-  
+/* for custom width for key
+*/
+.customkycLayout{
   width: 300px;
 }
 
+/* for street space breaking */
+.kycStreetAddressLayout{
+  word-break: break-word;
+}
+
+
+/*==============viewKYCDEtail page======================*/
+
+
+/* Pattern styles */
+.left-half {
+  /*background-color: #ff9e2c;*/
+  float: left;
+  width: 50%;
+}
+.right-half {
+  /*background-color: #b6701e;*/
+  float: left;
+  width: 50%;
+  padding-left: 7px;
+}
+.viewKycContainer{
+  max-width: 200% !important;
+}
+.bankdtlHeight{
+  height: 510px;
+}
 
 .container
 {
