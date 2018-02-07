@@ -8,8 +8,8 @@ import UsrBankDetail from './client/js/usr_bank_detail';
 import DisplayKycDetails from './client/js/display_kycdetails';
 import DisplayBankDetails from './client/js/display_bankdetails';
 import AdminDashboard from './client/js/admin/admin_dashboard';
-import DisplayBankDetails from './client/js/display_personalkyc';
-
+//import DisplayBankDetails from './client/js/display_personalkyc';
+import Displaykycpersonal from './client/js/display_user_profile';
 const history = createHistory()
 
 export default class ProjectRouter extends React.Component {
@@ -21,6 +21,7 @@ export default class ProjectRouter extends React.Component {
           <Route exact path='/bankDetails' component={UsrBankDetail} />
           <Route exact path='/admin' component={AdminDashboard} />
           <Route exact path='/user-bankDetails' component={DisplayBankDetails} />
+          <Route exact path='/display_user_profile' component={DisplayBankDetails} />
           <Route exact path='/user-kycDetails' component={DisplayKycDetails} />
           <Route path='*' component={PageNotFound} />
         </Switch>
