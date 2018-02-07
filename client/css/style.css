@@ -34,6 +34,18 @@ img, div {
   margin: 10px 0 0 10px;
 }*/
 
+.hide-bottom {
+    border-top-style: hidden;
+}
+
+.bankDetailHeading{
+  font-weight: 700;
+  margin-top: -11px;
+  margin-left: -11px;
+  margin-bottom: 25px;
+}
+
+
 /*========ADMIN==================*/
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr'
+import Constant from '../util/constant';
 
 export default class UsrBankDetail extends React.Component {
 
