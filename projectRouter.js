@@ -7,7 +7,6 @@ import KycInfo from './client/js/kycInfo';
 import UsrBankDetail from './client/js/usr_bank_detail';
 import AdminDashboard from './client/js/admin/admin_dashboard';
 import ViewKycDetails from './client/js/viewKycDetails';
-import DisplayBankDetails from './client/js/display_personalkyc';
 
 const history = createHistory()
 
