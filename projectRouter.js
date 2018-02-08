@@ -6,6 +6,7 @@ import PageNotFound from './client/js/pageNotFound/pageNotFound'
 import KycInfo from './client/js/kycInfo';
 import UsrBankDetail from './client/js/usr_bank_detail';
 import AdminDashboard from './client/js/admin/admin_dashboard';
+import Displaykycpersonal from './client/js/display_user_profile';
 import ViewKycDetails from './client/js/viewKycDetails';
 
 const history = createHistory()
