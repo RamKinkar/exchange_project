@@ -14,5 +14,5 @@ module.exports = (app) => {
   app.post('/api/verifyKyc', userKycinfoController.verifyKyc);
   app.post('/api/userBankDetail', userBankDetailController.create);
   app.delete('/api/userBankDetail', userBankDetailController.destroy);
-
+  // app.post('/api/craetegDriveFolder', userKycinfoController.craetegDriveFolder);
 };

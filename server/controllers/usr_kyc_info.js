@@ -1,6 +1,33 @@
 const Usr_kyc_Info = require('../models').usr_kyc_info;
 var fs = require('file-system');
 var CommonHelper = require('../../_helper');
+// const gDrivekeyFile = require('../../oauth2.keys');
+// const {google} = require('googleapis');
+// var googleAuth = require('google-auth-library');
+// var oauth2Client = new OAuth2(
+//   l8gnrh2p79b8s59aao90qksn1gfqag0.apps.googleusercontent.com,
+//   AIzaSyCifnnzViLCXpR34l4dAjAQemFZ5qpk-6s,
+//   http://localhost:3000
+// );
+// var drive = google.drive({ version: 'v3', auth: oauth2Client });
+
+// const sampleClient = require('../sampleclient');
+// const fs = require('fs');
+
+// const auth = sampleClient.oAuth2Client;
+
+// var google = require('googleapis');
+// google-auth-library
+// var OAuth2Client = google.auth.OAuth2;
+// var CLIENT_ID = gDrivekeyFile.client_id;
+// var CLIENT_SECRET = gDrivekeyFile.client_secret;
+// var REDIRECT_URL = gDrivekeyFile.redirect_uris;
+// var oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+// oauth2Client.setCredentials({
+// access_token: identities.google.accessToken
+// });
+
+// var drive = google.drive({ version: 'v2', auth: oauth2Client });
 
 
 module.exports = {
@@ -115,4 +142,24 @@ module.exports = {
     })
     .catch((error) => res.status(400).send(error));
   },
+
+  // craetegDriveFolder(req, res) {
+  //   var folderId = '16MFOdq424gZ9SN0Xah90O7bGaHouSB9i';
+  //   var fileMetadata = {
+  //     'name': 'uploadPan',
+  //     'mimeType': 'application/vnd.google-apps.folder',
+  //     'parents': [folderId]
+  //   };
+  //   drive.files.create({
+  //     resource: fileMetadata,
+  //     fields: 'id'
+  //   }, function (err, file) {
+  //     if (err) {
+  //       // Handle error
+  //       console.error(err);
+  //     } else {
+  //       console.log('Folder Id: ', file.id);
+  //     }
+  //   });
+  // },
 };

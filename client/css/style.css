@@ -167,7 +167,10 @@ input.spl_checkbox:checked + .slider:before {
     box-shadow: 0px 0px 3px #888888;
     padding: 40px;}
 
-.cstm_layout_wrapper{margin-top:8%;}
+.cstm_layout_wrapper{
+  /*margin-top:8%;*/
+  max-width: 1500px !important;
+  }
 
 
 
