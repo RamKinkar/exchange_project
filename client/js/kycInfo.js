@@ -3,8 +3,6 @@ import axios from 'axios';
 import Dropzone from 'react-dropzone'
 import {toastr} from 'react-redux-toastr'
 import ImageUpload from './uploadImage';
-import DatePickerComponent from './datepicker';
-
 
 export default class KycInfo extends React.Component {
 	constructor(props){
@@ -15,23 +13,15 @@ export default class KycInfo extends React.Component {
 	      pan_filepath: '',
 	      aadhar_filepath: '',
 	      aadharObject: null,
-	      panObject: null,
-	      panDob: null
+	      panObject: null
 	    }
 		this.submitKycInfo = this.submitKycInfo.bind(this);
 		this.storeAadhardata = this.storeAadhardata.bind(this);
 		this.storePandata = this.storePandata.bind(this);
-		this.setPanDob = this.setPanDob.bind(this);
 	} 
 
 	submitKycInfo () {
 		this.uploadPan();
-	}
-
-	setPanDob(panDob) {
-		this.setState({
-			panDob: panDob
-		})
 	}
 
 	submitKyc (pan_filepath,aadhar_filepath) {
@@ -41,11 +31,21 @@ export default class KycInfo extends React.Component {
 			'panHolder_name': this.refs.pan_name.value,
 			'aadhar_number': this.refs.aadhar_num.value,
 			'pan_number': this.refs.pan_num.value,
-			'pan_dob': this.state.panDob,
+			'pan_dob': this.refs.pan_dob.value,
 			'pan_filepath': pan_filepath,
-			'aadhar_filepath': aadhar_filepath
+			'aadhar_filepath': aadhar_filepath,
+			'gros_income':this.refs.gross_income,
+			'resdential_status':this.refs.res_status,
+			'street_address':this.refs.street_addr,
+			'City':this.refs.city,
+			'state':this.refs.State,
+			'Pincode':this.refs.pincode
+
 		}
-		console.log('dadtatat sending object>>>>>>>>>',data)
+		
+		
+			
+
 		axios.post('/api/userKycinfo', {data}).then(function (response) {
 		    if(response.data){
 		    	self.resetForm();
@@ -62,6 +62,7 @@ export default class KycInfo extends React.Component {
 		this.refs.pan_name.value =  '',
 		this.refs.aadhar_num.value =  '',
 		this.refs.pan_num.value =  '',
+		this.refs.pan_dob.value =  '',
 		this.refs.panImage.value =  ''
 	}	
 
@@ -129,14 +130,9 @@ export default class KycInfo extends React.Component {
 								<label>Upload Pan</label>
 								<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
 							</div>
-							<div className="row">
-								
-								<div className="col-sm-6 form-group">
-									<label>Pan DOB</label>
-									<DatePickerComponent panDob= {this.setPanDob}/>
-								</div>		
-								<div className="col-sm-6 form-group">
-								</div>	
+							<div className="form-group">
+								<label>Pan DOB</label>
+								<input type="date" ref="pan_dob" placeholder="01/03/1995" className="form-control"/>
 							</div>	
 							<div className="row">
 								<div className="col-sm-6 form-group">
@@ -148,12 +144,52 @@ export default class KycInfo extends React.Component {
 									<input type="text" ref="aadhar_num" placeholder="Enter Aadhar Number Here.." className="form-control"/>
 								</div>	
 							</div>
-							<div className="form-group">
-								<label>Upload Aadhar</label>
+							<div className="row">
+							<div className="col-sm-6 form-group">
+								<label>Upload Aadhar Front</label>
 								<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
+							</div>
+							<div className="col-sm-6 form-group">
+							
+								<label>Upload Aadhar Back</label>
+								<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
+						</div>
+							</div>
+							<div className="row">
+								<div className="col-sm-6 form-group">
+									<label>Gross Annual Income</label>
+									<input type="text" ref="gross_income" required="field cant be empty" placeholder="Enter the annual income" className="form-control"/>
+								</div>		
+								<div className="col-sm-6 form-group">
+									<label>Residential Status</label>
+									<input type="text" ref="res_status" placeholder="Enter the residential status" required="field cant be empty" className="form-control"/>
+								</div>	
+							</div>
+							<div className="row">
+								<div className="col-sm-6 form-group">
+									<label>Street Address</label>
+									<input type="text" ref="street_addr" placeholder="Enter Street Address" required="field cant be empty" className="form-control"/>
+								</div>		
+								<div className="col-sm-6 form-group">
+									<label>City</label>
+									<input type="text" ref="city" placeholder="Enter the city"  required="field cant be empty" className="form-control"/>
+								</div>	
+							</div>
+							<div className="row">
+								<div className="col-sm-6 form-group">
+									<label>State</label>
+									<input type="text" ref="State" placeholder="Enter  the state" required="field cant be empty" className="form-control"/>
+								</div>		
+								<div className="col-sm-6 form-group">
+									<label>Pincode</label>
+									<input type="text" ref="pincode" placeholder="Enter the pincode" required="field cant be empty" className="form-control"/>
+								</div>	
 							</div>						
 						<button type="button" onClick = {this.submitKycInfo} className="btn btn-lg btn-info">Submit</button>					
+						
 						</div>
+						
+   
 					</form> 
 				</div>
 			</div>

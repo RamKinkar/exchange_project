@@ -1,46 +1,49 @@
 import React from 'react';
 import axios from 'axios';
 import {toastr} from 'react-redux-toastr'
-import Constant from '../util/constant';
+import ImageUpload from './uploadImage';
 
 export default class UsrBankDetail extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-         this.state ={
-    
-         }
-         this.submitBankInfo = this.submitBankInfo.bind(this);
+        this.state = {
+
+        }
+        this.submitBankInfo = this.submitBankInfo.bind(this);
+        this.storeBankData = this.storeBankData.bind(this);
     }
 
-    isEmpty(){
-        if(this.refs.account_num.value=="" && this.refs.branch_name.value=="" && this.refs.branch_name.value=="" && this.refs.account_num.value=="" && this.refs.account_holder_name.value=="" && this.refs.ifsc_code.value=="" && this.refs.acc_typ.value=="" && this.refs.mob_num.value=="")
-        {
-        alert('fields cannot be empty');
-        return true;
+    storeBankData(file) {
+        let self = this
+        self.setState({
+            aadharObject: file
+        })
+    }
+
+    isEmpty() {
+        if (this.refs.account_num.value == "" && this.refs.branch_name.value == "" && this.refs.branch_name.value == "" && this.refs.account_num.value == "" && this.refs.account_holder_name.value == "" && this.refs.ifsc_code.value == "" && this.refs.acc_typ.value == "" && this.refs.mob_num.value == "") {
+            alert('fields cannot be empty');
+            return true;
         }
 
     }
 
     validate() {
-        if(this.isEmpty()) {
+        if (this.isEmpty()) {
             alert("Please enter required fields");
-        } 
-        else{
+        } else {
             var account_num = this.refs.account_num.value;
             var confirm_accnum = this.refs.renter_acc_num.value;
-                if (account_num != confirm_accnum)
-                {
-                    alert("account number do not match.");
-                    return false;
-                }
-                else{
-                    return true;
-                }
-      
+            if (account_num != confirm_accnum) {
+                alert("account number do not match.");
+                return false;
+            } else {
+                return true;
             }
-    }
 
+        }
+    }
     submitBankInfo () {
         let self = this;
         let validateAccount=this.validate();
@@ -54,6 +57,7 @@ export default class UsrBankDetail extends React.Component {
                 'ifsc_code': this.refs.ifsc_code.value,
                 'account_type': this.refs.acc_typ.value,
                 'mobile_no': this.refs.mob_num.value
+
             }
             axios.post('/api/userBankDetail',{data}).then(function (response) {
                 if(response.data){
@@ -76,6 +80,20 @@ export default class UsrBankDetail extends React.Component {
         this.refs.acc_typ.value =  ''
         this.refs.mob_num.value =  ''
     }   
+    uploadPan () {
+        let self = this
+        axios.post('/api/uploadPan', this.state.panObject).then(function (response) {
+            self.setState({
+                pan_filepath: response.data.filepath
+            })
+            if(self.state.pan_filepath){
+                self.uploadAadhar(self.state.pan_filepath);         
+            }
+          }).catch(function (error) {
+            console.log('ereeeeeeeeeor',error);
+        });
+    }
+
 
     render() {
       return (
@@ -94,6 +112,7 @@ export default class UsrBankDetail extends React.Component {
                                     <label>Branch Name</label>
                                     <input type="text" ref="branch_name" placeholder="Noida"required="field can't be empty" className="form-control"/>
                                 </div>
+
                             </div>  
                               <div className="row">
                                 <div className="col-sm-6 form-group">
@@ -124,8 +143,16 @@ export default class UsrBankDetail extends React.Component {
                                     <label>Mobile Number</label>
                                     <input type="text" pattern="^\d{10}$" ref="mob_num" placeholder="Enter Pan Number Here.."required="field can't be empty" className="form-control"/>
                                 </div>
+                            </div>
                             </div>   
-                                </div>
+                               <div>
+                                <div className="row">
+                                <div className="col-sm-6 form-group">
+                                <label>Upload Bank Details</label>
+                                <ImageUpload uploadImages = {this.storeBankData} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
+                            </div> 
+                            </div> 
+                            </div>
                                  <div className="col-md-12 center-block" >
                                  <input type="submit" value="save" className="btn btn-primary center-block" id="b8"   onClick={this.submitBankInfo} />
                                 </div>
