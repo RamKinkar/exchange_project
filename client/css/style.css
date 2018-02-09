@@ -34,6 +34,13 @@ img, div {
   margin: 10px 0 0 10px;
 }*/
 
+
+/*css for display error message on validation*/
+.text-center{
+  text-align: center;
+  color: red;
+}
+
 .hide-bottom {
     border-top-style: hidden;
     

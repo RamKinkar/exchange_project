@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone'
 import {toastr} from 'react-redux-toastr'
 import ImageUpload from './uploadImage';
 import DatePickerComponent from './datepicker';
+import Validate from '../util/validation';
 
 export default class KycInfo extends React.Component {
 	constructor(props){
@@ -15,7 +16,8 @@ export default class KycInfo extends React.Component {
 	      aadhar_filepath: '',
 	      aadharObject: null,
 	      panObject: null,
-	      panDob: null
+	      panDob: null,
+	      ErrorMessage: ''
 	    }
 		this.submitKycInfo = this.submitKycInfo.bind(this);
 		this.storeAadhardata = this.storeAadhardata.bind(this);
@@ -35,7 +37,7 @@ export default class KycInfo extends React.Component {
 
 	submitKyc (pan_filepath,aadhar_filepath) {
 		let self = this;
-		var data = {
+		let data = {
 			'aadharHolder_name': this.refs.aadhar_name.value,
 			'panHolder_name': this.refs.pan_name.value,
 			'aadhar_number': this.refs.aadhar_num.value,
@@ -51,17 +53,19 @@ export default class KycInfo extends React.Component {
 			// 'Pincode':this.refs.pincode
 
 		}
-			
-		axios.post('/api/userKycinfo', {data}).then(function (response) {
-		    if(response.data){
-		    	self.resetForm();
-		    	toastr.success('Saved Successfully','Kyc Information Saved Sucessfully')
-		    	self.props.history.push('/bankDetails')
-		    }
-		  }).catch(function (error) {
-		    console.log('ereeeeeeeeeor',error);
-		    toastr.error('Error',error)
-		});
+
+		if(Validate._validateKycFormField(data, this.state.ErrorMessage, self)){
+			axios.post('/api/userKycinfo', {data}).then(function (response) {
+			    if(response.data){
+			    	self.resetForm();
+			    	toastr.success('Saved Successfully','Kyc Information Saved Sucessfully')
+			    	self.props.history.push('/bankDetails')
+			    }
+			  }).catch(function (error) {
+			    console.log('ereeeeeeeeeor',error);
+			    toastr.error('Error',error)
+			});
+		}
 	}
 
 	resetForm () {
@@ -74,14 +78,16 @@ export default class KycInfo extends React.Component {
 
 	uploadAadhar (pan_filepath) {
 		let self = this
-		axios.post('/api/uploadAadhar',this.state.aadharObject).then(function (response) {
-		    self.setState({
-		    	aadhar_filepath: response.data.filepath
-		    })
-			self.submitKyc(pan_filepath,self.state.aadhar_filepath)
-		  }).catch(function (error) {
-		    console.log('ereeeeeeeeeor',error);
-		});
+		if(Validate._validateAadhaarFront(this.state.aadharObject, this.state.ErrorMessage, self)){
+			axios.post('/api/uploadAadhar',this.state.aadharObject).then(function (response) {
+			    self.setState({
+			    	aadhar_filepath: response.data.filepath
+			    })
+				self.submitKyc(pan_filepath,self.state.aadhar_filepath)
+			  }).catch(function (error) {
+			    console.log('ereeeeeeeeeor',error);
+			});
+		}
 	}	
 
 	storeAadhardata(file) {
@@ -100,102 +106,109 @@ export default class KycInfo extends React.Component {
 
 	uploadPan () {
 		let self = this
-		axios.post('/api/uploadPan', this.state.panObject).then(function (response) {
-		    self.setState({
-		    	pan_filepath: response.data.filepath
-		    })
-			if(self.state.pan_filepath){
-				self.uploadAadhar(self.state.pan_filepath);		  	
-			}
-		  }).catch(function (error) {
-		    console.log('ereeeeeeeeeor',error);
-		});
+		if(Validate._validatePan(this.state.panObject, this.state.ErrorMessage, self)){
+			axios.post('/api/uploadPan', this.state.panObject).then(function (response) {
+			    self.setState({
+			    	pan_filepath: response.data.filepath
+			    })
+				if(self.state.pan_filepath){
+					self.uploadAadhar(self.state.pan_filepath);		  	
+				}
+			  }).catch(function (error) {
+			    console.log('ereeeeeeeeeor',error);
+			});
+		}
 	}
 
 
    	render() {
-      return (
-		<div className="container">
-		    <h1 className="well">KYC Form</h1>
-			<div className="col-lg-12 well">
-				<div className="row">
-					<form>
-						<div className="col-sm-12">
-							<div className="row">
-								<div className="col-sm-6 form-group">
-									<label>Pan Holder Name</label>
-									<input type="text" ref="pan_name" placeholder="Enter Pan Holder Name.." className="form-control"/>
+   		var error = "";
+	    if(this.state.ErrorMessage){
+	     error = <span className="text-center"><p>{this.state.ErrorMessage}</p></span>
+	    }
+	    return (
+			<div className="container">
+				    <h1 className="well">KYC Form</h1>
+					<div className="col-lg-12 well">
+						<div className="row">
+							<form>
+								{error}
+								<div className="col-sm-12">
+									<div className="row">
+										<div className="col-sm-6 form-group">
+											<label>Pan Holder Name</label>
+											<input type="text" ref="pan_name" placeholder="Enter Pan Holder Name.." className="form-control"/>
+										</div>
+										<div className="col-sm-6 form-group">
+											<label>Pan Number</label>
+											<input type="text" ref="pan_num" placeholder="Enter Pan Number Here.." className="form-control"/>
+										</div>
+									</div>					
+									<div className="form-group">
+										<label>Upload Pan</label>
+										<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
+									</div>
+									<div className="form-group">
+										<label>Pan DOB</label>
+										<DatePickerComponent panDob={this.setPanDob}/>
+									</div>	
+									<div className="row">
+										<div className="col-sm-6 form-group">
+											<label>Aadhar Holder Name</label>
+											<input type="text" ref="aadhar_name" placeholder="Enter Aadhar Name here" className="form-control"/>
+										</div>		
+										<div className="col-sm-6 form-group">
+											<label>Aadhar Number</label>
+											<input type="text" ref="aadhar_num" placeholder="Enter Aadhar Number Here.." className="form-control"/>
+										</div>	
+									</div>
+									<div className="row">
+									<div className="col-sm-6 form-group">
+										<label>Upload Aadhar Front</label>
+										<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
+									</div>
+									<div className="col-sm-6 form-group">
+									
+										<label>Upload Aadhar Back</label>
+										<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
 								</div>
-								<div className="col-sm-6 form-group">
-									<label>Pan Number</label>
-									<input type="text" ref="pan_num" placeholder="Enter Pan Number Here.." className="form-control"/>
+									</div>
+									<div className="row">
+										<div className="col-sm-6 form-group">
+											<label>Gross Annual Income</label>
+											<input type="text" ref="gross_income" required placeholder="Enter the annual income" className="form-control"/>
+										</div>		
+										<div className="col-sm-6 form-group">
+											<label>Residential Status</label>
+											<input type="text" ref="res_status" placeholder="Enter the residential status" required className="form-control"/>
+										</div>	
+									</div>
+									<div className="row">
+										<div className="col-sm-6 form-group">
+											<label>Street Address</label>
+											<input type="text" ref="street_addr" placeholder="Enter Street Address" required className="form-control"/>
+										</div>		
+										<div className="col-sm-6 form-group">
+											<label>City</label>
+											<input type="text" ref="city" placeholder="Enter the city"  required className="form-control"/>
+										</div>	
+									</div>
+									<div className="row">
+										<div className="col-sm-6 form-group">
+											<label>State</label>
+											<input type="text" ref="State" placeholder="Enter  the state" required="field cant be empty" className="form-control"/>
+										</div>		
+										<div className="col-sm-6 form-group">
+											<label>Pincode</label>
+											<input type="text" ref="pincode" placeholder="Enter the pincode" required="field cant be empty" className="form-control"/>
+										</div>	
+									</div>						
+								<button type="button" onClick = {this.submitKycInfo} className="btn btn-lg btn-info">Submit</button>					
 								</div>
-							</div>					
-							<div className="form-group">
-								<label>Upload Pan</label>
-								<ImageUpload uploadImages = {this.storePandata} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
-							</div>
-							<div className="form-group">
-								<label>Pan DOB</label>
-								<DatePickerComponent panDob={this.setPanDob}/>
-							</div>	
-							<div className="row">
-								<div className="col-sm-6 form-group">
-									<label>Aadhar Holder Name</label>
-									<input type="text" ref="aadhar_name" placeholder="Enter Aadhar Name here" className="form-control"/>
-								</div>		
-								<div className="col-sm-6 form-group">
-									<label>Aadhar Number</label>
-									<input type="text" ref="aadhar_num" placeholder="Enter Aadhar Number Here.." className="form-control"/>
-								</div>	
-							</div>
-							<div className="row">
-							<div className="col-sm-6 form-group">
-								<label>Upload Aadhar Front</label>
-								<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
-							</div>
-							<div className="col-sm-6 form-group">
-							
-								<label>Upload Aadhar Back</label>
-								<ImageUpload uploadImages = {this.storeAadhardata} name='image' value={this.state.image} icon='Upload Pan'/>
+							</form> 
 						</div>
-							</div>
-							<div className="row">
-								<div className="col-sm-6 form-group">
-									<label>Gross Annual Income</label>
-									<input type="text" ref="gross_income" required="field cant be empty" placeholder="Enter the annual income" className="form-control"/>
-								</div>		
-								<div className="col-sm-6 form-group">
-									<label>Residential Status</label>
-									<input type="text" ref="res_status" placeholder="Enter the residential status" required="field cant be empty" className="form-control"/>
-								</div>	
-							</div>
-							<div className="row">
-								<div className="col-sm-6 form-group">
-									<label>Street Address</label>
-									<input type="text" ref="street_addr" placeholder="Enter Street Address" required="field cant be empty" className="form-control"/>
-								</div>		
-								<div className="col-sm-6 form-group">
-									<label>City</label>
-									<input type="text" ref="city" placeholder="Enter the city"  required="field cant be empty" className="form-control"/>
-								</div>	
-							</div>
-							<div className="row">
-								<div className="col-sm-6 form-group">
-									<label>State</label>
-									<input type="text" ref="State" placeholder="Enter  the state" required="field cant be empty" className="form-control"/>
-								</div>		
-								<div className="col-sm-6 form-group">
-									<label>Pincode</label>
-									<input type="text" ref="pincode" placeholder="Enter the pincode" required="field cant be empty" className="form-control"/>
-								</div>	
-							</div>						
-						<button type="button" onClick = {this.submitKycInfo} className="btn btn-lg btn-info">Submit</button>					
-						</div>
-					</form> 
-				</div>
+					</div>
 			</div>
-		</div>
 		);
    	}
 }
