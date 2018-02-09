@@ -1,6 +1,7 @@
 const Usr_kyc_Info = require('../models').usr_kyc_info;
 var fs = require('file-system');
 var CommonHelper = require('../../_helper');
+const createFilePath = __dirname +'/../../../kyc_images/'
 // const gDrivekeyFile = require('../../oauth2.keys');
 // const {google} = require('googleapis');
 // var googleAuth = require('google-auth-library');
@@ -74,19 +75,20 @@ module.exports = {
       "aadharfolder_id": 'user_aadhar'+randomNumberBetween0and19
     }
     // var buf = new Buffer(sampleFile.data, 'base64');
-    let pathOfData = __dirname +'/../../../kyc_images/'+aadharfolder_id.aadharfolder_id
-    let filepath = '/home/syncrasy/project/kyc_images/'+aadharfolder_id.aadharfolder_id+'/aadhar.jpg'
+    // let pathOfData = __dirname +'/../../../kyc_images/'+aadharfolder_id.aadharfolder_id
+    
+    let saveImgfilepath = '/kyc_images/aadhar_'+aadharfolder_id.aadharfolder_id+'.jpg'
+    //let filepath = '/home/syncrasy/project/kyc_images/'+aadharfolder_id.aadharfolder_id+'/aadhar.jpg'
     console.log('beforree',fileObject[0].data)
     let base64 = new Buffer(fileObject[0].data, 'base64');
     console.log('afterrrrr',base64)
-    fs.writeFile(pathOfData+'/aadhar.jpg', base64, function(err) {
+    fs.writeFile(createFilePath+'/aadhar_'+aadharfolder_id.aadharfolder_id+'.jpg', base64, function(err) {
       if(err) console.log('errrorrr',err )
       console.log('image saved>>>>>>>>>>>>>')
-      return res.json({'msg':'aadhar saved successfully', "filepath": filepath});
+      return res.json({'msg':'aadhar saved successfully', "filepath": saveImgfilepath});
     })
-  },
-
-  uploadPan(req, res) {
+},
+     uploadPan(req, res) {
     if (!req.files)
       return res.status(400).send('No files were uploaded.');
     var fileObject = Object.values(req.files);
@@ -94,13 +96,14 @@ module.exports = {
     var pan_id = {
       "pan_id": 'user_pan'+randomNumberBetween0and19
     }
-    let pathOfData = __dirname +'/../../../kyc_images/'+pan_id.pan_id
-    let filepath = '/home/syncrasy/project/kyc_images/'+pan_id.pan_id+'/pan.jpg'
+     let saveImgfilepath = '/kyc_images/pan_'+pan_id.pan_id+'.jpg'
+    //let pathOfData = __dirname +'/../../../kyc_images/'+pan_id.pan_id
+    //let filepath = '/home/syncrasy/project/kyc_images/'+pan_id.pan_id+'/pan.jpg'
     let base64 = new Buffer(fileObject[0].data, 'base64');
-    fs.writeFile(pathOfData+'/pan.jpg', base64,function(err) {
+    fs.writeFile(createFilePath+'/pan_'+pan_id.pan_id+'.jpg', base64,function(err) {
       if(err) console.log('errrorrr',err )
       console.log('image saved>>>>>>>>>>>>>')
-      return res.json({'msg':'pan saved successfully', "filepath": filepath});
+      return res.json({'msg':'pan saved successfully', "filepath": saveImgfilepath});
     })
   },
 

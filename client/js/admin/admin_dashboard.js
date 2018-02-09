@@ -66,8 +66,8 @@ export default class AdminDashboard extends React.Component {
 		                </thead>
 		                <tbody>
 		                  {this.state.kycRecords.length?this.state.kycRecords.map((result, index)=>{
-		                  	let pan = 'file://'+result.pan_filepath
-		                  	console.log('pan>>>>>>>>>>',pan)
+		                  	//let aadhar = {result.aadhar_filepath}
+		                  	//console.log('pan>>>>>>>>>>',pan)
 		                      return(
 		                        <tr key={index}>
 		                          <td>{result.id}</td>
@@ -76,7 +76,7 @@ export default class AdminDashboard extends React.Component {
 		                          <td>{result.panHolder_name}</td>
 		                          <td>{result.pan_number}</td>
 		                          <td><a href={result.aadhar_filepath} type="image/jpg" target="_blank">View Aadhar</a></td>
-		                          <td><a href={pan} target="_blank">View Pan</a></td>
+		                          <td><a href={result.pan_filepath} target="_blank">View Pan</a></td>
 		                          <td>
 		                            <label className="switch">
 		                              <input className="spl_checkbox" type="checkbox" id={result.id} onChange={()=> this.verifyKyc(result.id)}/>

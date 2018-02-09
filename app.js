@@ -1,5 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
+const nconf = require('nconf');
 const path = require('path')
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
@@ -10,10 +11,6 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const ejs = require('ejs');
 const flash    = require('connect-flash');
-// var fs = require('file-system');
-// const db = require('../db');
-// const usrKycInfo = require('./server/models').usrKycInfo;
-
 
 // Set up the express app
 const app = express();
@@ -33,9 +30,11 @@ app.use('/javascript', express.static(path.resolve(__dirname, './client/javascri
 // app.use('/js', express.static(path.resolve(__dirname, '../client/js')));
 app.use('/fonts', express.static(path.resolve(__dirname, './client/fonts')));
 app.use('/build', express.static(path.resolve(__dirname, './build')));
-
+app.use('/kyc_images', express.static(path.resolve(__dirname, '../kyc_images'))); 
 
 // Log requests to the console.
+
+
 app.use(logger('dev'));
 app.use(fileUpload());
 
@@ -52,8 +51,5 @@ app.get('*', function (req, res){
 	console.log('inside first requestssssssssssssss');
    res.sendFile('index.html', { root: path.join(__dirname, './client/html') });
 })
-
-
-
 
 module.exports = app;
