@@ -1,7 +1,7 @@
 import React from 'react';
 module.exports = {
 
-  //validation for signUp
+  //validation for kycDetail
   _validateKycFormField(data, ErrorMessage, self){
     // var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var valid = true
@@ -60,6 +60,61 @@ module.exports = {
     }
     return valid
   },
+
+  //validation for BankDetail
+  _validateBankFormField(data, ErrorMessage, self){
+    console.log('==== bank data is ======>>>>>>',data)
+    console.log(data.account_num !== data.confirm_accnum)
+    var valid = true
+    if (data.ifsc_code == "") {
+    valid = false
+    self.setState({
+     ErrorMessage: 'Please fill the ifsc code'
+    })
+    }else if (data.branch_name == "") {
+        valid = false
+        self.setState({
+        ErrorMessage: 'Please fill the branch name'
+        })
+    }else if (data.account_type == "" ) {
+        valid = false
+        self.setState({
+          ErrorMessage: 'Please fill the account type'
+        })
+      }else if (data.bank_name == ""){
+          valid = false
+          self.setState({
+           ErrorMessage: 'Please fill the bank name'
+         })
+      }else if (data.account_holderName == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the account holder name'
+       })
+      }else if (data.account_no == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the account number'
+       })
+      }else if (data.confirm_accnum == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the confirm account number'
+       })
+      }else if (data.account_no !== data.confirm_accnum){
+        valid = false
+        self.setState({
+         ErrorMessage: 'account number and confirm account number should match'
+       })
+      }else if (data.mobile_no == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the mobile number'
+       })
+      }
+    return valid
+  },
+
 }
 
 

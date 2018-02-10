@@ -122,7 +122,7 @@ export default class KycInfo extends React.Component {
 
 
    	render() {
-   		var error = "";
+   		let error = "";
 	    if(this.state.ErrorMessage){
 	     error = <span className="text-center"><p>{this.state.ErrorMessage}</p></span>
 	    }
