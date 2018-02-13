@@ -20,15 +20,45 @@ module.exports = {
         self.setState({
           ErrorMessage: 'Please fill the date of birth'
         })
-      }else if (data.aadharHolder_name == ""){
+      }else if (data.aadhaarHolder_name == ""){
           valid = false
           self.setState({
            ErrorMessage: 'Please fill the aadhaar holder name'
          })
-      }else if (data.aadhar_number == ""){
+      }else if (data.aadhaar_number == ""){
         valid = false
         self.setState({
          ErrorMessage: 'Please fill the aadhaar number'
+       })
+      }else if (data.gross_annual_income == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the gross annual income'
+       })
+      }else if (data.residential_status == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the residential status'
+       })
+      }else if (data.street_address == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the street address'
+       })
+      }else if (data.city == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the city'
+       })
+      }else if (data.state == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the state'
+       })
+      }else if (data.pin_code == ""){
+        valid = false
+        self.setState({
+         ErrorMessage: 'Please fill the pincode'
        })
       }
     return valid
@@ -61,10 +91,20 @@ module.exports = {
     return valid
   },
 
+  _validateAadhaarBack(aadhar_filepath, ErrorMessage, self){
+    var valid = true
+    // let self = this
+    if (aadhar_filepath == null || aadhar_filepath == "" ) {
+    valid = false
+    self.setState({
+     ErrorMessage: 'Please upload the aadhaar back image'
+    })
+    }
+    return valid
+  },
+
   //validation for BankDetail
   _validateBankFormField(data, ErrorMessage, self){
-    console.log('==== bank data is ======>>>>>>',data)
-    console.log(data.account_num !== data.confirm_accnum)
     var valid = true
     if (data.ifsc_code == "") {
     valid = false
@@ -101,7 +141,7 @@ module.exports = {
         self.setState({
          ErrorMessage: 'Please fill the confirm account number'
        })
-      }else if (data.account_no !== data.confirm_accnum){
+      }else if (data.account_no != data.confirm_accnum){
         valid = false
         self.setState({
          ErrorMessage: 'account number and confirm account number should match'
@@ -112,6 +152,19 @@ module.exports = {
          ErrorMessage: 'Please fill the mobile number'
        })
       }
+    return valid
+  },
+
+// method to validate the bank slip image
+  _validateBankSlip(bank_image, ErrorMessage, self){
+    var valid = true
+    // let self = this
+    if (bank_image == null || bank_image == "" ) {
+    valid = false
+    self.setState({
+     ErrorMessage: 'Please upload the bank slip image'
+    })
+    }
     return valid
   },
 

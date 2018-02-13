@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     account_holderName: DataTypes.STRING,
     ifsc_code: DataTypes.STRING,
     account_type: DataTypes.STRING,
-    mobile_no: DataTypes.STRING
+    mobile_no: DataTypes.STRING,
+    bank_filepath: DataTypes.STRING,
+    exchange_user_id: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

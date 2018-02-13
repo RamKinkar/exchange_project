@@ -7,28 +7,21 @@ var crypto = require('crypto');
 var key = 'thekeyis%%1234abcdddd4558$khhhn4nnnn';
 
 module.exports = {
-  // _getEncryptedKYCData(req) {
-  //   // var encryptedValues=null;
-  //   var salt = bcrypt.genSaltSync(saltRounds);
-  //   var data = {
-  //     'aadharHolder_name': bcrypt.hashSync(req.aadharHolder_name, salt),
-  //     'panHolder_name': bcrypt.hashSync(req.panHolder_name, salt),
-  //     'aadhar_number': bcrypt.hashSync(req.aadhar_number, salt),  
-  //     'pan_number': bcrypt.hashSync(req.pan_number, salt),
-  //     'pan_filepath': bcrypt.hashSync(req.pan_filepath, salt),  
-  //     'aadhar_filepath': bcrypt.hashSync(req.aadhar_filepath, salt)
-  //   }
-  //   return data;
-  // },
-
   _getEncryptedKYCData(req) {
     var data = {
-      'aadharHolder_name': crypto.createCipher('aes-256-ctr',key).update(req.aadharHolder_name,'utf-8','hex'),
+      'aadhaarHolder_name': crypto.createCipher('aes-256-ctr',key).update(req.aadhaarHolder_name,'utf-8','hex'),
       'panHolder_name': crypto.createCipher('aes-256-ctr',key).update(req.panHolder_name,'utf-8','hex'),
-      'aadhar_number': crypto.createCipher('aes-256-ctr',key).update(req.aadhar_number,'utf-8','hex'),
+      'aadhaar_number': crypto.createCipher('aes-256-ctr',key).update(req.aadhaar_number,'utf-8','hex'),
       'pan_number': crypto.createCipher('aes-256-ctr',key).update(req.pan_number,'utf-8','hex'),
       'pan_filepath': crypto.createCipher('aes-256-ctr',key).update(req.pan_filepath,'utf-8','hex'),
-      'aadhar_filepath': crypto.createCipher('aes-256-ctr',key).update(req.aadhar_filepath,'utf-8','hex')
+      'aadhaar_front_filepath': crypto.createCipher('aes-256-ctr',key).update(req.aadhaar_front_filepath,'utf-8','hex'),
+      'aadhaar_back_filepath': crypto.createCipher('aes-256-ctr',key).update(req.aadhaar_back_filepath,'utf-8','hex'),
+      'gross_annual_income': crypto.createCipher('aes-256-ctr',key).update(req.gross_annual_income,'utf-8','hex'),
+      'residential_status': crypto.createCipher('aes-256-ctr',key).update(req.residential_status,'utf-8','hex'),
+      'street_address': crypto.createCipher('aes-256-ctr',key).update(req.street_address,'utf-8','hex'),
+      'city': crypto.createCipher('aes-256-ctr',key).update(req.city,'utf-8','hex'),
+      'state': crypto.createCipher('aes-256-ctr',key).update(req.state,'utf-8','hex'),
+      'pin_code': crypto.createCipher('aes-256-ctr',key).update(req.pin_code,'utf-8','hex')
     }
     return data;
   },
@@ -41,7 +34,8 @@ module.exports = {
       'account_holderName': crypto.createCipher('aes-256-ctr',key).update(req.account_holderName,'utf-8','hex'),
       'ifsc_code': crypto.createCipher('aes-256-ctr',key).update(req.ifsc_code,'utf-8','hex'),
       'account_type': crypto.createCipher('aes-256-ctr',key).update(req.account_type,'utf-8','hex'),
-      'mobile_no': crypto.createCipher('aes-256-ctr',key).update(req.mobile_no,'utf-8','hex')
+      'mobile_no': crypto.createCipher('aes-256-ctr',key).update(req.mobile_no,'utf-8','hex'),
+      'bank_filepath': crypto.createCipher('aes-256-ctr',key).update(req.bank_filepath,'utf-8','hex')
     }
     return data;
   },

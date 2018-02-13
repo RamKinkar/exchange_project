@@ -1,36 +1,39 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('usr_kyc_infos', {
+    return queryInterface.createTable('usr_bank_details', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      aadharHolder_name: {
+      bank_name: {
         type: Sequelize.STRING
       },
-      panHolder_name: {
+      branch_name: {
         type: Sequelize.STRING
       },
-      aadhar_number: {
+      account_no: {
         type: Sequelize.STRING
       },
-      pan_number: {
+      account_holderName: {
         type: Sequelize.STRING
       },
-      pan_dob: {
-        type: Sequelize.DATE
-      },
-      aadhar_filepath: {
+      ifsc_code: {
         type: Sequelize.STRING
       },
-      pan_filepath: {
+      account_type: {
         type: Sequelize.STRING
       },
-      verification_flag: {
-        type: Sequelize.BOOLEAN
+      mobile_no: {
+        type: Sequelize.STRING
+      },
+      bank_filepath: {
+        type: Sequelize.STRING
+      },
+      exchange_user_id: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +46,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('usr_kyc_infos');
+    return queryInterface.dropTable('usr_bank_details');
   }
 };

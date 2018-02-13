@@ -10,26 +10,21 @@ export default class ViewUserProfile extends React.Component {
 
 	    }
 		// this.submitKycInfo = this.submitKycInfo.bind(this);
-	} 
+	}
 
    	render() {
       return (
-      	
-      					
-		
-		<div className="container viewKycContainer">
-			
-			    <div className="left-half">
-		   			<DisplayUsrPersonalInfo/>
-			    </div> 
-			    <div className="right-half">
-		   			<DisplayKycDocuments />
-			    </div>
-				<div>
-		   			<a href="/view-kycDetails">VIEW KYC</a>
-			    </div>
-		</div>
-
+				<div className="container viewKycContainer">
+					    <div className="left-half">
+				   			<DisplayUsrPersonalInfo/>
+					    </div>
+					    <div className="right-half">
+				   			<DisplayKycDocuments />
+					    </div>
+						<div>
+				   			<a href="/view-kycDetails">VIEW KYC</a>
+					    </div>
+				</div>
 		);
    	}
 }

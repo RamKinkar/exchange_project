@@ -1,12 +1,12 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
- 
+
 import '../../node_modules/react-datepicker/dist/react-datepicker.css';
- 
+
 // CSS Modules, react-datepicker-cssmodules.css
-// import '../../node_modules/react-datepicker/dist/react-datepicker-cssmodules.css';
- 
+import '../../node_modules/react-datepicker/dist/react-datepicker-cssmodules.css';
+
 export default class DatePickerComponent extends React.Component {
   constructor (props) {
     super(props)
@@ -15,7 +15,7 @@ export default class DatePickerComponent extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
- 
+
   handleChange(date) {
     this.setState({
       startDate: date
@@ -25,7 +25,7 @@ export default class DatePickerComponent extends React.Component {
       this.props.panDob(this.state.startDate)
     }
   }
- 
+
   render() {
     return <DatePicker
         selected={this.state.startDate}

@@ -10,7 +10,8 @@ export default class UsrBankDetail extends React.Component {
         super(props);
         this.state = {
             ErrorMessage: '',
-            bankObject: ''
+            bankObject: null,
+            bank_filepath: null
         }
         this.submitBankInfo = this.submitBankInfo.bind(this);
         this.storeBankData = this.storeBankData.bind(this);
@@ -22,30 +23,6 @@ export default class UsrBankDetail extends React.Component {
             bankObject: file
         })
     }
-
-    // isEmpty() {
-    //     if (this.refs.account_num.value == "" && this.refs.branch_name.value == "" && this.refs.branch_name.value == "" && this.refs.account_num.value == "" && this.refs.account_holder_name.value == "" && this.refs.ifsc_code.value == "" && this.refs.acc_typ.value == "" && this.refs.mob_num.value == "") {
-    //         alert('fields cannot be empty');
-    //         return true;
-    //     }
-
-    // }
-
-    // validate() {
-    //     if (this.isEmpty()) {
-    //         alert("Please enter required fields");
-    //     } else {
-    //         var account_num = this.refs.account_num.value;
-    //         var confirm_accnum = this.refs.renter_acc_num.value;
-    //         if (account_num != confirm_accnum) {
-    //             alert("account number do not match.");
-    //             return false;
-    //         } else {
-    //             return true;
-    //         }
-
-    //     }
-    // }
 
     submitBankInfo () {
         let self = this;
@@ -59,45 +36,52 @@ export default class UsrBankDetail extends React.Component {
             'account_type': this.refs.acc_typ.value,
             'mobile_no': this.refs.mob_num.value
         }
-
-        if(Validate._validateBankFormField(data, this.state.ErrorMessage, self)){
-
-            console.log('caleeedeeddeededde',data)
-            axios.post('/api/userBankDetail',{data}).then(function (response) {
-                if(response.data){
-                    self.resetForm();
-                    toastr.success('Saved Successfully','Bank Detail Saved Sucessfully')
-                    self.props.history.push('/view-kycDetails')
-                }
-              }).catch(function (error) {
-                console.log('ereeeeeeeeeor',error);
-                toastr.error('Error',error)
-            });
+        if(Validate._validateBankFormField(data, this.state.ErrorMessage, self)&& Validate._validateBankSlip(this.state.bankObject, this.state.ErrorMessage, self)){
+          this.uploadBankSlipInfo(data)
         }
     }
 
-    resetForm () {
-        this.refs.bank_name.value =  '',
-        this.refs.branch_name.value =  '',
-        this.refs.account_num.value =  '',
-        this.refs.account_holder_name.value =  '',
-        this.refs.ifsc_code.value =  '',
-        this.refs.acc_typ.value =  ''
-        this.refs.mob_num.value =  ''
-    }   
+    uploadBankDtl(data){
+      let self = this
+      axios.post('/api/userBankDetail',{data}).then(function (response) {
+          if(response.data){
+              // self.resetForm();
+              toastr.success('Saved Successfully','Bank Detail Saved Sucessfully')
+              // self.props.history.push('/view-kycDetails',{ locationId: response.data.exchange_user_id})
+              self.props.history.push({pathname: '/view-kycDetails',
+              search: '?query='+`${response.data.exchange_user_id}`,state: { exchange_user_id: response.data.exchange_user_id }})
+          }
+        }).catch(function (error) {
+          console.log('ereeeeeeeeeor',error);
+          toastr.error('Error',error)
+      });
+    }
 
-    uploadPan () {
+    // resetForm () {
+    //     this.refs.bank_name.value =  '',
+    //     this.refs.branch_name.value =  '',
+    //     this.refs.account_num.value =  '',
+    //     this.refs.account_holder_name.value =  '',
+    //     this.refs.ifsc_code.value =  '',
+    //     this.refs.acc_typ.value =  ''
+    //     this.refs.mob_num.value =  ''
+    // }
+
+// method for uploading the bank slip image
+    uploadBankSlipInfo (data) {
         let self = this
-        axios.post('/api/uploadPan', this.state.panObject).then(function (response) {
-            self.setState({
-                pan_filepath: response.data.filepath
-            })
-            if(self.state.pan_filepath){
-                self.uploadAadhar(self.state.pan_filepath);         
-            }
-          }).catch(function (error) {
-            console.log('ereeeeeeeeeor',error);
-        });
+          axios.post('/api/uploadBankSlip', this.state.bankObject).then(function (response) {
+              self.setState({
+                  bank_filepath: response.data.filepath
+              })
+              if(self.state.bank_filepath){
+                  data.bank_filepath = self.state.bank_filepath;
+                  console.log('data in the  afte uploading image>>>>>>>>.',data)
+                  self.uploadBankDtl(data);
+              }
+            }).catch(function (error) {
+              console.log('ereeeeeeeeeor',error);
+          });
     }
 
 
@@ -124,7 +108,7 @@ export default class UsrBankDetail extends React.Component {
                                         <input type="text" ref="branch_name" placeholder="Noida" className="form-control"/>
                                     </div>
 
-                                </div>  
+                                </div>
                                   <div className="row">
                                     <div className="col-sm-6 form-group">
                                         <label> Account Type</label>
@@ -134,7 +118,7 @@ export default class UsrBankDetail extends React.Component {
                                         <label>Bank Name</label>
                                         <input type="text" ref="bank_name" placeholder="HDFC" className="form-control"/>
                                     </div>
-                                </div> 
+                                </div>
                                      <div className="row">
                                     <div className="col-sm-6 form-group">
                                         <label>Account Holder Name</label>
@@ -144,7 +128,7 @@ export default class UsrBankDetail extends React.Component {
                                         <label>account Number</label>
                                         <input type="text" ref="account_num" placeholder="1234567" className="form-control"/>
                                     </div>
-                                </div>  
+                                </div>
                                      <div className="row">
                                     <div className="col-sm-6 form-group">
                                         <label>Re-enter The AccountNumber</label>
@@ -155,19 +139,19 @@ export default class UsrBankDetail extends React.Component {
                                         <input type="text" pattern="^\d{10}$" ref="mob_num" placeholder="Enter Mobile Number Here.." className="form-control"/>
                                     </div>
                                 </div>
-                                </div>   
+                                </div>
                                    <div>
                                     <div className="row">
                                     <div className="col-sm-6 form-group">
                                     <label>Upload Bank Details</label>
                                     <ImageUpload uploadImages = {this.storeBankData} name='image' value={this.state.image} ref='panImage' icon='Upload Pan'/>
-                                </div> 
-                                </div> 
+                                </div>
+                                </div>
                                 </div>
                                  <div className="col-md-12 center-block" >
                                  <button type="button" onClick = {this.submitBankInfo} className="btn btn-primary center-block" id="b8">Submit Bank Details</button>
                                 </div>
-                        </form> 
+                        </form>
                     </div>
                 </div>
             </div>

@@ -55,28 +55,27 @@ export default class AdminDashboard extends React.Component {
 		                <thead>
 		                  <tr>
 		                    <th>ID</th>
-		                    <th>AadharHolderName</th>
-		                    <th>Aadhar Number</th>
+		                    <th>AadhaarHolderName</th>
+		                    <th>Aadhaar Number</th>
 		                    <th>PanHolderName</th>
 		                    <th>Pan Number</th>
-		                    <th>Aadhar Filepath</th>
+		                    <th>Aadhaar Filepath</th>
 		                    <th>Pan Filepath</th>
 		                    <th>STATUS</th>
 		                  </tr>
 		                </thead>
 		                <tbody>
 		                  {this.state.kycRecords.length?this.state.kycRecords.map((result, index)=>{
-		                  	//let aadhar = {result.aadhar_filepath}
-		                  	//console.log('pan>>>>>>>>>>',pan)
 		                      return(
 		                        <tr key={index}>
 		                          <td>{result.id}</td>
-		                          <td>{result.aadharHolder_name}</td>
-		                          <td>{result.aadhar_number}</td>
+		                          <td>{result.aadhaarHolder_name}</td>
+		                          <td>{result.aadhaar_number}</td>
 		                          <td>{result.panHolder_name}</td>
 		                          <td>{result.pan_number}</td>
-		                          <td><a href={result.aadhar_filepath} type="image/jpg" target="_blank">View Aadhar</a></td>
-		                          <td><a href={result.pan_filepath} target="_blank">View Pan</a></td>
+		                          <td><a href={result.pan_filepath} type="image/jpg" target="_blank">View Pan</a></td>
+		                          <td><a href={result.aadhaar_front_filepath} target="_blank">View Aadhar Front</a></td>
+		                          <td><a href={result.aadhaar_back_filepath} target="_blank">View Aadhar Back</a></td>
 		                          <td>
 		                            <label className="switch">
 		                              <input className="spl_checkbox" type="checkbox" id={result.id} onChange={()=> this.verifyKyc(result.id)}/>
